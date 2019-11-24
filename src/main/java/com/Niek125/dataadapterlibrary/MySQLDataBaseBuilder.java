@@ -41,4 +41,7 @@ public class MySQLDataBaseBuilder extends DataBaseBuilder {
     String getPWord() {
         return pWord;
     }
+
+    @Override
+    String getDriver(){return "com.mysql.jdbc.Driver";}
 }

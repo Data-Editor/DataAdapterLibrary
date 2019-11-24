@@ -15,7 +15,7 @@ public class QueryBuilder implements IQueryBuilder {
     @Override
     public void clearQuery() {
         query = syntax.getPrefix();
-        firstParam = false;
+        firstParam = true;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class QueryBuilder implements IQueryBuilder {
     @Override
     public void addParameter(Object param) {
         query += syntax.toParam(param, firstParam);
-        this.firstParam = true;
+        this.firstParam = false;
     }
 
     @Override

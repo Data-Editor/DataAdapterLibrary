@@ -13,17 +13,22 @@ public class Mapper implements IObjectMapper {
         try {
             List<String> columns = new ArrayList<>();
             ResultSetMetaData setMetaData = set.getMetaData();
-            for (int i = 0; i < setMetaData.getColumnCount(); i++) {
-                columns.add(setMetaData.getColumnLabel(i));
+            for (int i = 1; i <= setMetaData.getColumnCount(); i++) {
+                try {
+                    columns.add(setMetaData.getColumnLabel(i));
+                } catch (SQLException e) {
+                    columns.add(setMetaData.getColumnName(i));
+                }
             }
             List<T> objs = new ArrayList<>();
-            while (set.next()){
+            while (set.next()) {
                 T obj = type.newInstance();
                 for (String p :
                         columns) {
-                    Field fP = type.getClass().getField(p);
+                    Field fP = obj.getClass().getDeclaredField(p);
                     fP.setAccessible(true);
                     fP.set(obj, set.getObject(p));
+                    fP.setAccessible(false);
                 }
                 objs.add(obj);
             }

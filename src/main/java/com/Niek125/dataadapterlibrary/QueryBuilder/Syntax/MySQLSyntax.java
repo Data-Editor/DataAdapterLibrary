@@ -1,5 +1,8 @@
 package com.Niek125.dataadapterlibrary.QueryBuilder.Syntax;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MySQLSyntax implements ISyntax {
     @Override
     public String getPrefix() {
@@ -8,7 +11,7 @@ public class MySQLSyntax implements ISyntax {
 
     @Override
     public String getAppendix() {
-        return ");";
+        return ")";
     }
 
     @Override
@@ -24,6 +27,15 @@ public class MySQLSyntax implements ISyntax {
         }
         if (param == null) {
             syntax += "NULL";
+        } else if (param.getClass().equals(ArrayList.class)){
+            syntax += "'";
+            for (int i = 0; i < ((List)param).size(); i++) {
+                if(i > 0){
+                    syntax += ",";
+                }
+                syntax += "\\'" + ((List)param).get(i) + "\\'";
+            }
+            syntax += "'";
         } else if (param.getClass().equals(String.class)) {
             syntax += "'" + param + "'";
         } else {

@@ -5,13 +5,14 @@ import com.Niek125.dataadapterlibrary.Mapper.IObjectMapper;
 import com.Niek125.dataadapterlibrary.QueryBuilder.IQueryBuilder;
 
 public abstract class DataBaseBuilder {
-    DataBase getDataBase(){
+    public DataBase getDataBase(){
         return new DataBase(
                 getQueryBuilder(),
                 getObjectMapper(),
                 getHost(),
                 getUName(),
-                getPWord());
+                getPWord(),
+                getDriver());
     }
 
     abstract IQueryBuilder getQueryBuilder();
@@ -19,4 +20,5 @@ public abstract class DataBaseBuilder {
     abstract String getHost();
     abstract String getUName();
     abstract String getPWord();
+    abstract String getDriver();
 }
